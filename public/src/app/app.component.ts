@@ -7,16 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  newTask: any;
   constructor(private _httpService: HttpService){}
   
   ngOnInit(){
-    this.getTasksFromService();
+    // this.getTasksFromService();
+    this.newTask = {title: "", description: ""}
   }
 
+  title = 'MEAN';
   tasks = [];
   one_task: any;
-  title = 'public';
   
+  onSubmit() {
+    let observable = this._httpService.addTask(this.newTask);
+    observable.subscribe(data => {
+      console.log("Got data from post back", data);
+      this.newTask = {title: "", description: ""}
+    })
+  }  
+
   getTasksFromService(){
     this._httpService.getTasks().subscribe(data => {
       console.log(data);
@@ -30,5 +40,4 @@ export class AppComponent implements OnInit {
       this.one_task = data.tasks;
     }
     )};
-  
 }

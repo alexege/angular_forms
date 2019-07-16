@@ -39,8 +39,14 @@ module.exports = {
     },
 
     update: function(req, res) {
-        
-        Task.find({name: req.params.name}, function(err, task){
+        Task.findByIdAndUpdate({_id: req.params.id}, req.body, (err, tasksinDB) => {
+            if(err){
+                res.json({message: "Error", error: err});
+            } else {
+                res.json({message: "Success", tasks: tasksinDB})
+            }
+        })
+        Task.findByIdAndUpdate({name: req.params.name}, function(err, task){
             if(err){
                 console.log("Error finding task");
             } else {

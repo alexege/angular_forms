@@ -15,4 +15,8 @@ export class HttpService {
     return this._http.get(`/tasks/${id}`);
   }
 
+  addTask(newtask){
+    return this._http.post('/task', newtask)
+}
+
 }
